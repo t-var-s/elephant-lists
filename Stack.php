@@ -1,5 +1,5 @@
 <?php
-class Queue{ // first elephant to arrive is the first to go, the next of tail is always null
+class Stack{ // last elephant to arrive is the first to go, the next of head is always null
     public $length;
     public $head;
     public $tail;
@@ -23,18 +23,18 @@ class Queue{ // first elephant to arrive is the first to go, the next of tail is
     function peak(){
         return $this->head ? $this->head['value'] : null;
     }
-    function enqueue($value){
+    function push($value){
         $node = $this->createNode($value);
         if($this->length === 0){
             $this->head = &$node;
             $this->tail = &$node;
             return $this->length++;
         }
-        $this->tail['next'] = &$node;
-        $this->tail = &$node;
-        return $this->length++;
+        $node['next'] = &$this->head;
+        $this->head = &$node;
+        return $this->length++;        
     }
-    function dequeue(){
+    function pop(){
         if($this->length === 0){
             return null;
         }
@@ -46,11 +46,13 @@ class Queue{ // first elephant to arrive is the first to go, the next of tail is
     function test(){
         if($this->length > 0 || $this->peak() !== null){ return false; }
         $arriving_array = array('alpha', 'beta', 'charlie', 'delta');
-        $queued_array = $arriving_array;
-        foreach($arriving_array as $value){ $this->enqueue($value); }
-        if(array_shift($queued_array) !== $this->dequeue()){ return false; }
-        if($queued_array[0] !== $this->peak()){ return false; }
+        $stacked_array = array('delta', 'charlie', 'beta', 'alpha');
+        foreach($arriving_array as $value){ $this->push($value); }
+        if(array_shift($stacked_array) !== $this->pop()){ return false; }
+        if($stacked_array[0] !== $this->peak()){ return false; }
         $matching_array = $this->toArray();
-        return count(array_diff($queued_array, $matching_array)) === 0;
+        return count(array_diff($stacked_array, $matching_array)) === 0;
     }
 }
+$s = new Stack();
+var_dump($s->test());

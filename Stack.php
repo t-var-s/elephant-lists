@@ -54,5 +54,3 @@ class Stack{ // last elephant to arrive is the first to go, the next of head is 
         return count(array_diff($stacked_array, $matching_array)) === 0;
     }
 }
-$s = new Stack();
-var_dump($s->test());

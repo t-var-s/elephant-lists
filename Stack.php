@@ -2,11 +2,9 @@
 class Stack{ // last elephant to arrive is the first to go, the next of head is always null
     public $length;
     public $head;
-    public $tail;
     function __construct(){
         $this->length = 0;
         $this->head = null;
-        $this->tail = null;
     }
     function toArray(){
         $array = array();
@@ -27,7 +25,6 @@ class Stack{ // last elephant to arrive is the first to go, the next of head is 
         $node = $this->createNode($value);
         if($this->length === 0){
             $this->head = &$node;
-            $this->tail = &$node;
             return $this->length++;
         }
         $node['next'] = &$this->head;
